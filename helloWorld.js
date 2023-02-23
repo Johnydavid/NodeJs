@@ -1,3 +1,3 @@
 require('http')
-.createServer((req, res)=>res.end('hello world!'))
-.listen(3001);
+.createServer((req, res)=>res.end('hello world! How r u'))
+.listen(3000);
