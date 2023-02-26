@@ -10,7 +10,14 @@ const server = http.createServer(function (req, res) {
   }
   if (req.url === "/json") {
     return respondJSON(req, res);
-  } else {
+  } 
+
+  if (req.url.match(/test/)){
+    return respondInputs(req, res);
+  }
+  
+  
+  else {
     return respondNotFound(req, res);
   }
 });
@@ -25,6 +32,8 @@ function respondJSON(req, res) {
   res.end(JSON.stringify({ name: "johnson", nos: [1, 2, 3, 4] }));
 }
 
+
+
 function respondNotFound(req, res) {
   res.writeHead(404, { "Content-Type": "text/plain" });
   res.end("Not Found");
@@ -32,7 +41,36 @@ function respondNotFound(req, res) {
 
 
 function respondInputs(req, res){
-    
+
+  
+
+    const { input = '' } = queryString.parse(
+
+        req.url
+        .split('?')
+        .slice(1)
+        .join('')
+
+    )
+
+    console.log(
+
+        req.url
+        .split('?')
+        .slice(1)
+        .join(''))
+
+    res.setHeader("Content-Type", "application/json");
+
+    res.end(
+        JSON.stringify({
+            normal : input,
+            caps : input.toUpperCase,
+            count : input.length,
+            reverse : input.split('').reverse().join('')
+
+        })
+    )
 }
 
 
